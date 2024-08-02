@@ -41,10 +41,10 @@ from collections.abc import Hashable
 import datetime
 import functools
 import logging
-import random
 import re
 import time
 from typing import Set, List, Optional, Callable, Union
+import secrets
 
 logger = logging.getLogger("schedule")
 
@@ -711,7 +711,7 @@ class Job:
         if self.latest is not None:
             if not (self.latest >= self.interval):
                 raise ScheduleError("`latest` is greater than `interval`")
-            interval = random.randint(self.interval, self.latest)
+            interval = secrets.SystemRandom().randint(self.interval, self.latest)
         else:
             interval = self.interval
 
